@@ -1,0 +1,29 @@
+:root {
+  /* Colors */
+  --bg-primary: #FDFBF7; /* Cream/Off-white */
+  --bg-secondary: #F5F0E1;
+  
+  --text-primary: #2C2C2C;
+  --text-secondary: #595959;
+  --text-light: #FFFFFF;
+
+  --primary-color: #FF8BA7; /* Pastel Pink */
+  --secondary-color: #FFC6FF; /* Pastel Lavender */
+  --accent-color: #FFD93D; /* Pastel Yellow */
+  
+  --chalkboard-bg: #2B4141; /* Dark Slate Green */
+  --chalk-text: #F0F0F0;
+  
+  --postit-yellow: #FFF9B0;
+  --postit-pink: #FFC4C4;
+  --postit-blue: #C4F0FF;
+  --postit-green: #C4FFD6;
+
+  /* Status Colors */
+  --status-performer: #FF6B6B;
+  --status-audience: #4ECDC4;
+
+  /* Fonts */
+  --font-main: 'Noto Sans KR', sans-serif;
+  --font-hand: 'Jua', sans-serif; /* Cute, rounded font */
+}

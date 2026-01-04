@@ -1,0 +1,201 @@
+.container {
+    padding: 2rem;
+    max-width: 500px;
+    margin: 0 auto;
+    text-align: center;
+    font-family: 'Gamja Flower', cursive;
+}
+
+.title {
+    font-size: 2rem;
+    color: #2d3436;
+    margin-bottom: 0.5rem;
+}
+
+.subtitle {
+    color: #636e72;
+    margin-bottom: 2rem;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    text-align: left;
+}
+
+.inputGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.inputGroup label {
+    font-size: 1.1rem;
+    color: #2d3436;
+    font-weight: bold;
+}
+
+.inputGroup input {
+    padding: 12px;
+    border: 2px solid #dfe6e9;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-family: inherit;
+    /* Use global font */
+    transition: border-color 0.2s;
+}
+
+.inputGroup input:focus {
+    border-color: #74b9ff;
+    outline: none;
+}
+
+.submitBtn {
+    margin-top: 1rem;
+    padding: 14px;
+    background-color: #6c5ce7;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+
+.submitBtn:hover {
+    background-color: #5f27cd;
+}
+
+.submitBtn:disabled {
+    background-color: #b2bec3;
+    cursor: not-allowed;
+}
+
+.successStep {
+    animation: fadeIn 0.5s ease-out;
+}
+
+.successTitle {
+    color: #00b894;
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+}
+
+.infoBox {
+    background-color: #ffffff;
+    padding: 16px;
+    border-radius: 12px;
+    border: 1px solid #dfe6e9;
+    margin-bottom: 1.5rem;
+    text-align: left;
+}
+
+.infoHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 0.75rem;
+}
+
+.infoTitle {
+    margin: 0;
+    font-size: 1.2rem;
+    color: #2d3436;
+}
+
+.editBtn {
+    background-color: #0984e3;
+    color: #ffffff;
+    border: none;
+    padding: 6px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.85rem;
+}
+
+.editBtn:hover {
+    background-color: #0871c2;
+}
+
+.infoList {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.infoRow {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    font-size: 0.95rem;
+}
+
+.infoLabel {
+    color: #636e72;
+    font-weight: bold;
+}
+
+.infoValue {
+    color: #2d3436;
+    word-break: break-word;
+}
+
+.infoNotice {
+    margin-top: 0.75rem;
+    font-size: 0.9rem;
+    color: #636e72;
+    line-height: 1.4;
+}
+
+.accountBox {
+    background-color: #f1f2f6;
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 1.5rem;
+    border: 2px dashed #b2bec3;
+}
+
+.bankName {
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: #2d3436;
+}
+
+.accountName {
+    color: #636e72;
+    margin-bottom: 0.5rem;
+}
+
+.amount {
+    font-size: 1.5rem;
+    color: #d63031;
+    margin-top: 0.5rem;
+}
+
+.guideText {
+    color: #2d3436;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+}
+
+.warningText {
+    color: #e17055;
+    font-size: 0.95rem;
+    font-weight: bold;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

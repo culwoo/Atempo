@@ -1,0 +1,81 @@
+.container {
+    max-width: 400px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background-color: white;
+    border-radius: 1rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.title {
+    color: var(--text-primary);
+    margin-bottom: 2rem;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.inputGroup {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    gap: 0.5rem;
+}
+
+.inputGroup label {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    font-weight: bold;
+}
+
+.inputGroup input {
+    padding: 0.8rem;
+    border: 1px solid #DDD;
+    border-radius: 8px;
+    font-family: var(--font-main);
+    font-size: 1rem;
+}
+
+.inputGroup input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px var(--secondary-color);
+}
+
+.submitBtn {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 1rem;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    margin-top: 1rem;
+    transition: background-color 0.2s;
+}
+
+.submitBtn:hover {
+    background-color: #ff7597;
+}
+
+.error {
+    color: #ff4d4f;
+    font-size: 0.9rem;
+}
+
+.switchMode {
+    margin-top: 2rem;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+.switchBtn {
+    background: none;
+    color: var(--primary-color);
+    font-weight: bold;
+    margin-left: 0.5rem;
+    text-decoration: underline;
+}

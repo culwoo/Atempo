@@ -1,0 +1,368 @@
+/* Existing styles... */
+.home {
+    padding-bottom: 32px;
+}
+
+.posterSection {
+    padding: 0.5rem 1rem 0;
+    display: flex;
+    justify-content: center;
+}
+
+.posterCard {
+    width: 100%;
+    max-width: 280px;
+    aspect-ratio: 2382 / 3369;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.nicknameSection {
+    padding: 0.5rem 1rem 0;
+    display: flex;
+    justify-content: center;
+}
+
+.nicknameForm {
+    margin-top: 0;
+    width: 100%;
+    max-width: 280px;
+    background: white;
+    border-radius: 12px;
+    padding: 0.75rem;
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08);
+    border: 1px solid #e5e9f0;
+    box-sizing: border-box;
+}
+
+.nicknameLabel {
+    font-weight: 700;
+    color: #2d3436;
+    display: block;
+    margin-bottom: 0.6rem;
+}
+
+.nicknameControls {
+    display: flex;
+    gap: 0.5rem;
+    align-items: stretch;
+}
+
+.nicknameControls input {
+    flex: 1;
+    padding: 0.6rem 0.7rem;
+    border-radius: 10px;
+    border: 1px solid #dfe6e9;
+    font-size: 0.9rem;
+    min-width: 0;
+    box-sizing: border-box;
+}
+
+.nicknameControls button {
+    padding: 0.6rem 0.9rem;
+    border-radius: 10px;
+    border: none;
+    background: #6c5ce7;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    flex-shrink: 0;
+    white-space: nowrap;
+    box-sizing: border-box;
+}
+
+.nicknameSaved {
+    margin-top: 0.6rem;
+    font-size: 0.85rem;
+    color: #00b894;
+    font-weight: 600;
+}
+
+.flipCard {
+    width: 100%;
+    max-width: 280px;
+    perspective: 1200px;
+    cursor: pointer;
+}
+
+.flipInner {
+    position: relative;
+    width: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.dragging {
+    transition: none;
+}
+
+.hintSpin .flipInner {
+    animation: flipHint 1.2s ease;
+}
+
+.flipFace {
+    position: relative;
+    width: 100%;
+    backface-visibility: hidden;
+    transform-style: preserve-3d;
+}
+
+.flipFront {
+    transform: rotateY(0deg);
+}
+
+.flipBack {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: rotateY(180deg);
+}
+
+@keyframes flipHint {
+    0% {
+        transform: rotateY(0deg);
+    }
+    40% {
+        transform: rotateY(180deg);
+    }
+    100% {
+        transform: rotateY(360deg);
+    }
+}
+
+.posterImage {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+}
+
+.ticketCard {
+    width: 100%;
+    max-width: 280px;
+    aspect-ratio: 2382 / 3369;
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+    border: 1px solid #dfe6e9;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.checkinBadge {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: #00b894;
+    color: white;
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 6px 10px;
+    border-radius: 999px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.12);
+    z-index: 2;
+}
+
+.ticketCard::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 6px;
+    background: linear-gradient(90deg, #6c5ce7, #a29bfe);
+}
+
+.ticketHeader {
+    width: 100%;
+    padding: 1rem 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px dashed #dfe6e9;
+}
+
+.ticketTitle {
+    font-weight: bold;
+    color: #2d3436;
+    font-size: 1.1rem;
+}
+
+.ticketClass {
+    background: #6c5ce7;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: bold;
+}
+
+.ticketBody {
+    padding: 1.4rem 1.2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: #fafafa;
+    width: 100%;
+    flex: 1;
+}
+
+.qrCode {
+    width: 120px;
+    height: 120px;
+    margin-bottom: 0.8rem;
+    border: 4px solid white;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.ticketName {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #2d3436;
+    margin-bottom: 0.2rem;
+}
+
+.ticketInfo {
+    color: #636e72;
+    font-size: 0.9rem;
+}
+
+.ticketFooter {
+    width: 100%;
+    padding: 0.6rem;
+    background: #6c5ce7;
+    color: white;
+    text-align: center;
+    font-size: 0.9rem;
+}
+
+/* Timeline Styles */
+.timelineSection {
+    padding: 1.5rem 1rem 2rem;
+}
+
+.timelineHeader {
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.timelineHeader h2 {
+    font-size: 1.5rem;
+    color: #2d3436;
+}
+
+.timelineContainer {
+    position: relative;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* Vertical Line */
+.timelineLine {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background-color: #dfe6e9;
+    z-index: 0;
+}
+
+.timelineItem {
+    display: flex;
+    align-items: center;
+    margin-bottom: 2rem;
+    position: relative;
+    z-index: 1;
+    width: 100%;
+}
+
+.contentBox,
+.dummyBox {
+    flex: 1;
+    /* 50% width each */
+}
+
+/* Center Icon */
+.centerIcon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    z-index: 2;
+    margin: 0 1rem;
+}
+
+.iconGreen {
+    background-color: #00b894;
+}
+
+.iconBlue {
+    background-color: #0984e3;
+}
+
+.iconYellow {
+    background-color: #fab1a0;
+}
+
+.iconPrimary {
+    background-color: #6c5ce7;
+}
+
+.timeText {
+    display: block;
+    font-weight: bold;
+    color: #6c5ce7;
+    font-size: 0.9rem;
+    margin-bottom: 4px;
+}
+
+.itemTitle {
+    font-size: 1rem;
+    color: #2d3436;
+    font-weight: bold;
+}
+
+/* Desktop Alignment */
+.leftAlign .contentBox {
+    text-align: right;
+}
+
+.rightAlign .contentBox {
+    text-align: left;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 600px) {
+
+    /* Keep centered layout but reduce padding */
+    .timelineContainer {
+        padding: 0 10px;
+    }
+
+    .centerIcon {
+        margin: 0 0.5rem;
+        /* Reduce margin slightly */
+        width: 32px;
+        /* Slightly smaller icon */
+        height: 32px;
+    }
+
+    .timeText {
+        font-size: 0.8rem;
+    }
+
+    .itemTitle {
+        font-size: 0.9rem;
+    }
+}

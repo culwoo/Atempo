@@ -1,0 +1,140 @@
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 1rem;
+    /* Match Home screen poster margins */
+    animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.pageTitle {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    color: var(--text-primary);
+}
+
+.infoCard {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 3rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.infoRow {
+    display: flex;
+    align-items: flex-start;
+    /* Align to top for multi-line text */
+    gap: 1rem;
+    text-align: left;
+    /* Ensure text is left-aligned */
+    width: 100%;
+}
+
+.icon {
+    color: var(--primary-color);
+    width: 24px;
+    /* Reduced from 32px */
+    height: 24px;
+    min-width: 24px;
+    /* Prevent shrinking */
+    margin-top: 0.2rem;
+    /* Align visual center with first line of text */
+}
+
+.infoRow h3 {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.2rem;
+    margin-top: 0;
+}
+
+.infoRow p {
+    font-size: 1.1rem;
+    font-weight: 400;
+    /* Prevent faux bold */
+    margin: 0;
+    line-height: 1.4;
+    word-break: keep-all;
+    /* Prevent awkward word breaks */
+}
+
+.infoRow .smallText {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    display: inline-block;
+}
+
+.setlistContainer {
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+}
+
+.part {
+    flex: 1;
+    background-color: var(--bg-secondary);
+    padding: 1.5rem;
+    border-radius: 1rem;
+}
+
+.partTitle {
+    text-align: center;
+    color: var(--primary-color);
+    margin-bottom: 1.5rem;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.05);
+    padding-bottom: 0.5rem;
+}
+
+.list {
+    list-style: none;
+}
+
+.item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+}
+
+.songTitle {
+    font-weight: bold;
+}
+
+.artist {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+.intermission {
+    color: var(--text-secondary);
+    font-style: italic;
+    justify-content: center;
+    margin: 1.5rem 0;
+}
+
+.divider {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .setlistContainer {
+        flex-direction: column;
+    }
+}
