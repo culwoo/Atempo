@@ -5,6 +5,7 @@ import {
     onAuthStateChanged, signInWithEmailAndPassword, signOut as firebaseSignOut, createUserWithEmailAndPassword, updateProfile,
     doc, setDoc, query, collection, where, getDocs
 } from '../api/firebase';
+import { isAdminEmail } from '../config/admins';
 
 const AuthContext = createContext();
 
@@ -22,7 +23,8 @@ export const AuthProvider = ({ children }) => {
                     uid: firebaseUser.uid,
                     name: firebaseUser.displayName || '공연진',
                     email: firebaseUser.email,
-                    role: 'performer'
+                    role: 'performer',
+                    isAdmin: isAdminEmail(firebaseUser.email)
                 });
                 setLoading(false);
             } else {
@@ -69,7 +71,8 @@ export const AuthProvider = ({ children }) => {
             uid: res.user.uid,
             name: name,
             email: res.user.email,
-            role: 'performer'
+            role: 'performer',
+            isAdmin: isAdminEmail(res.user.email)
         });
     };
 

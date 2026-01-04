@@ -5,10 +5,11 @@
  * 2. sendTicketSMS: Sends ticket email when reservation status changes to paid
  */
 
-const { onRequest } = require("firebase-functions/v2/https");
+const { onRequest, onCall, HttpsError } = require("firebase-functions/v2/https");
 const { onDocumentUpdated } = require("firebase-functions/v2/firestore");
 const { initializeApp } = require("firebase-admin/app");
 const { getFirestore } = require("firebase-admin/firestore");
+const { getAuth } = require("firebase-admin/auth");
 const { defineSecret } = require("firebase-functions/params");
 const nodemailer = require("nodemailer");
 
@@ -21,6 +22,27 @@ const GMAIL_USER = defineSecret("GMAIL_USER");
 const GMAIL_APP_PASSWORD = defineSecret("GMAIL_APP_PASSWORD");
 const EMAIL_FROM_NAME = defineSecret("EMAIL_FROM_NAME");
 const PUBLIC_BASE_URL = defineSecret("PUBLIC_BASE_URL");
+
+const ADMIN_EMAILS = [
+    "4242fire@gmail.com",
+    "sseeooyyuunn@naver.com",
+    "mides3912@gmail.com"
+];
+
+const isAdminEmail = (email) => {
+    if (!email) return false;
+    return ADMIN_EMAILS.includes(email.toLowerCase());
+};
+
+const requireAdmin = (request) => {
+    if (!request.auth) {
+        throw new HttpsError("unauthenticated", "Login required.");
+    }
+    const email = request.auth.token?.email || "";
+    if (!isAdminEmail(email)) {
+        throw new HttpsError("permission-denied", "Admin only.");
+    }
+};
 
 const getMailTransport = () => {
     const user = (GMAIL_USER.value() || "").trim();
@@ -201,3 +223,17 @@ exports.sendTicketSMS = onDocumentUpdated(
         return null;
     }
 );
+
+exports.deletePerformer = onCall({ region: "asia-northeast3" }, async (request) => {
+    requireAdmin(request);
+
+    const uid = (request.data?.uid || "").trim();
+    if (!uid) {
+        throw new HttpsError("invalid-argument", "uid is required.");
+    }
+
+    await getAuth().deleteUser(uid);
+    await db.collection("users").doc(uid).delete();
+
+    return { success: true };
+});

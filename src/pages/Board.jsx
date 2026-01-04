@@ -21,7 +21,7 @@ const Board = () => {
         return unsubscribe;
     }, []);
 
-    const isAdmin = user?.role === 'performer' && user?.email === '4242fire@gmail.com';
+    const isAdmin = user?.isAdmin === true;
 
     // Filter posts based on privacy
     const filteredPosts = posts.filter(post => {

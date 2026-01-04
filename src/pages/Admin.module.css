@@ -227,3 +227,15 @@
     color: #636e72;
     font-size: 0.9rem;
 }
+
+.sectionHint {
+    margin: 0.5rem 0 1rem;
+    color: #636e72;
+    font-size: 0.9rem;
+}
+
+.errorText {
+    margin: 0.5rem 0 1rem;
+    color: #d63031;
+    font-size: 0.9rem;
+}
