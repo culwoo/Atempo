@@ -3,7 +3,7 @@ import { generateNickname } from '../utils/nickname';
 import {
     auth, db,
     onAuthStateChanged, signInWithEmailAndPassword, signOut as firebaseSignOut, createUserWithEmailAndPassword, updateProfile,
-    doc, setDoc, query, collection, where, getDocs
+    doc, setDoc, functions, httpsCallable
 } from '../api/firebase';
 import { isAdminEmail } from '../config/admins';
 
@@ -131,26 +131,26 @@ export const AuthProvider = ({ children }) => {
 
     // Ticket Actions
     const verifyToken = async (token) => {
-        // Find reservation with this token
         try {
-            const q = query(collection(db, "reservations"), where("token", "==", token));
-            const snapshot = await getDocs(q);
+            const verifyTicket = httpsCallable(functions, "verifyTicket");
+            const result = await verifyTicket({ token });
+            const data = result?.data;
 
-            if (snapshot.empty) {
+            if (!data?.success) {
                 return false;
             }
-
-            const reservation = snapshot.docs[0].data();
 
             // Login as Verified Audience
             const deviceUid = getDeviceUid();
             const verifiedUser = {
                 uid: deviceUid,
-                name: reservation.name,
+                name: data.name || '',
                 role: 'audience',
                 isVerified: true, // Key flag
-                reservationId: snapshot.docs[0].id,
-                token: token,
+                reservationId: data.reservationId,
+                token,
+                checkedIn: Boolean(data.checkedIn),
+                checkedInAt: data.checkedInAt || null,
                 enteredAt: new Date().toISOString()
             };
 

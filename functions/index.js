@@ -237,3 +237,37 @@ exports.deletePerformer = onCall({ region: "asia-northeast3" }, async (request) 
 
     return { success: true };
 });
+
+exports.verifyTicket = onCall({ region: "asia-northeast3" }, async (request) => {
+    const rawToken = request.data?.token || "";
+    const token = String(rawToken).trim();
+
+    if (!token) {
+        throw new HttpsError("invalid-argument", "token is required.");
+    }
+
+    const snapshot = await db
+        .collection("reservations")
+        .where("token", "==", token)
+        .limit(1)
+        .get();
+
+    if (snapshot.empty) {
+        return { success: false };
+    }
+
+    const doc = snapshot.docs[0];
+    const data = doc.data();
+
+    if (data.status !== "paid") {
+        return { success: false };
+    }
+
+    return {
+        success: true,
+        reservationId: doc.id,
+        name: data.name || "",
+        checkedIn: Boolean(data.checkedIn),
+        checkedInAt: data.checkedInAt || null
+    };
+});
