@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { BrowserMultiFormatReader } from '@zxing/browser';
 import { db, collection, doc, getDocs, onSnapshot, query, updateDoc, where } from '../api/firebase';
 import classes from './Checkin.module.css';
 
@@ -19,6 +18,37 @@ const Checkin = () => {
     const [scanStatus, setScanStatus] = useState(null);
     const [totals, setTotals] = useState({ paid: 0, checkedIn: 0 });
     const [manualToken, setManualToken] = useState('');
+    const [isMobile, setIsMobile] = useState(false);
+    const [requiresGesture, setRequiresGesture] = useState(false);
+    const [scanEnabled, setScanEnabled] = useState(true);
+
+    useEffect(() => {
+        if (typeof window === 'undefined') return;
+
+        const updateFromWidth = () => setIsMobile(window.innerWidth <= 768);
+
+        if (!window.matchMedia) {
+            updateFromWidth();
+            window.addEventListener('resize', updateFromWidth);
+            return () => window.removeEventListener('resize', updateFromWidth);
+        }
+
+        const mediaQuery = window.matchMedia('(max-width: 768px)');
+        const handleChange = (event) => setIsMobile(event.matches);
+        handleChange(mediaQuery);
+
+        if (mediaQuery.addEventListener) {
+            mediaQuery.addEventListener('change', handleChange);
+            return () => mediaQuery.removeEventListener('change', handleChange);
+        }
+        if (mediaQuery.addListener) {
+            mediaQuery.addListener(handleChange);
+            return () => mediaQuery.removeListener(handleChange);
+        }
+
+        window.addEventListener('resize', updateFromWidth);
+        return () => window.removeEventListener('resize', updateFromWidth);
+    }, []);
 
     useEffect(() => {
         const q = query(collection(db, 'reservations'), where('status', '==', 'paid'));
@@ -36,27 +66,68 @@ const Checkin = () => {
     }, []);
 
     useEffect(() => {
-        const reader = new BrowserMultiFormatReader();
-        readerRef.current = reader;
+        if (typeof navigator === 'undefined') return;
+        const isSamsungBrowser = /SamsungBrowser/i.test(navigator.userAgent || '');
+        setRequiresGesture(isSamsungBrowser);
+        setScanEnabled(!isSamsungBrowser);
+    }, []);
+
+    useEffect(() => {
+        let isActive = true;
 
         const startScan = async () => {
             if (!videoRef.current) return;
+
+            let BrowserMultiFormatReader;
             try {
-                await reader.decodeFromVideoDevice(null, videoRef.current, (result) => {
-                    if (result) {
-                        handleToken(result.getText());
-                    }
-                });
+                ({ BrowserMultiFormatReader } = await import('@zxing/browser'));
             } catch (error) {
-                setScanStatus({ type: 'error', message: '카메라를 열 수 없습니다.' });
+                if (isActive) {
+                    setScanStatus({ type: 'error', message: '이 브라우저에서는 QR 스캔이 지원되지 않습니다.' });
+                }
+                return;
+            }
+
+            if (!isActive) return;
+
+            const reader = new BrowserMultiFormatReader();
+            readerRef.current = reader;
+
+            const handleResult = (result) => {
+                if (result) {
+                    handleToken(result.getText());
+                }
+            };
+
+            const constraints = {
+                video: {
+                    facingMode: { ideal: isMobile ? 'environment' : 'user' }
+                }
+            };
+
+            try {
+                await reader.decodeFromConstraints(constraints, videoRef.current, handleResult);
+            } catch (error) {
+                try {
+                    await reader.decodeFromVideoDevice(null, videoRef.current, handleResult);
+                } catch (fallbackError) {
+                    if (isActive) {
+                        setScanStatus({ type: 'error', message: '카메라에 접근할 수 없습니다.' });
+                    }
+                }
             }
         };
 
-        startScan();
+        if (scanEnabled) {
+            startScan();
+        }
         return () => {
-            reader.reset();
+            isActive = false;
+            if (readerRef.current) {
+                readerRef.current.reset();
+            }
         };
-    }, []);
+    }, [isMobile, scanEnabled]);
 
     const handleToken = async (rawText) => {
         const token = parseToken(rawText);
@@ -132,8 +203,22 @@ const Checkin = () => {
 
             <section className={classes.scanner}>
                 <div className={classes.videoFrame}>
-                    <video ref={videoRef} className={classes.video} muted playsInline />
+                    <video
+                        ref={videoRef}
+                        className={`${classes.video} ${isMobile ? classes.noMirror : ''}`}
+                        muted
+                        playsInline
+                    />
                 </div>
+                {requiresGesture && !scanEnabled && (
+                    <button
+                        type="button"
+                        className={classes.startScanButton}
+                        onClick={() => setScanEnabled(true)}
+                    >
+                        카메라 시작
+                    </button>
+                )}
                 {scanStatus && (
                     <div className={`${classes.statusCard} ${classes[scanStatus.type]}`}>
                         <p>{scanStatus.message}</p>

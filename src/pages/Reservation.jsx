@@ -9,6 +9,7 @@ const Reservation = () => {
   const [step, setStep] = useState(1); // 1: Input, 2: Account Info
   const [reservationId, setReservationId] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const accountNumber = "우리은행 1002-158-287128";
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -42,6 +43,28 @@ const Reservation = () => {
       alert("예약 신청 중 오류가 발생했습니다.");
     } finally {
       setIsSubmitting(false);
+    }
+  };
+
+  const handleCopyAccount = async () => {
+    try {
+      if (navigator.clipboard?.writeText) {
+        await navigator.clipboard.writeText(accountNumber);
+      } else {
+        const textarea = document.createElement("textarea");
+        textarea.value = accountNumber;
+        textarea.setAttribute("readonly", "");
+        textarea.style.position = "absolute";
+        textarea.style.left = "-9999px";
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand("copy");
+        document.body.removeChild(textarea);
+      }
+      alert("계좌번호가 복사되었습니다.");
+    } catch (err) {
+      console.error("Failed to copy account number:", err);
+      alert("복사에 실패했습니다. 계좌번호를 길게 눌러 복사해주세요.");
     }
   };
 
@@ -125,12 +148,19 @@ const Reservation = () => {
               </div>
             </div>
             <p className={classes.infoNotice}>
-              입금 전에 정보가 맞는지 확인해주세요. 수정 시 기존 예약이
-              업데이트됩니다.
+              입금 전에 정보가 맞는지 확인해주세요.
+              <br />
+              수정 시 기존 예약이 업데이트됩니다.
             </p>
           </div>
           <div className={classes.accountBox}>
-            <p className={classes.bankName}>우리은행 1002-158-287128</p>
+            <button
+              type="button"
+              className={classes.bankNameButton}
+              onClick={handleCopyAccount}
+            >
+              {accountNumber}
+            </button>
             <p className={classes.accountName}>예금주 곽철우</p>
             <p className={classes.amount}>
               입금하실 금액: <strong>5,000원</strong>
