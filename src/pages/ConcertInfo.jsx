@@ -5,16 +5,15 @@ import classes from './ConcertInfo.module.css';
 const ConcertInfo = () => {
     const setlist = {
         part1: [
-            { id: 1, title: "비틀비틀짝짜꿍", artist: "한로로" },
-            { id: 2, title: "대화가 필요해", artist: "자두" },
-            { id: 3, title: "눈이 오잖아", artist: "이무진" },
-            { id: 4, title: "밤이 깊었네", artist: "크라잉넛" },
-            { id: 5, title: "무희", artist: "Vaundy" },
-            { id: 6, title: "각자의 밤", artist: "나상현씨밴드" },
-            { id: 7, title: "지금부터", artist: "Hebi" },
-            { id: 8, title: "Drowning", artist: "Woodz" },
-            { id: 9, title: "Highlight", artist: "Touched" },
-            { id: 10, title: "Antifreeze", artist: "검정치마" }
+            { id: 1, title: "기억을 걷는 시간", artist: "넬" },
+            { id: 2, title: "고백", artist: "델리스파이스" },
+            { id: 3, title: "혜성", artist: "윤하" },
+            { id: 4, title: "Pretender", artist: "오피셜 히게단디즘" },
+            { id: 5, title: "여우야", artist: "더클래식" },
+            { id: 6, title: "슈퍼스타", artist: "이한철" },
+            { id: 7, title: "Last Night on Earth", artist: "Green Day" },
+            { id: 8, title: "이 밤이 지나면", artist: "김연우" },
+            { id: 9, title: "Don't Look Back in Anger", artist: "Oasis" }
         ],
         part2: [
             { id: 11, title: "검을 현", artist: "이승윤" },
@@ -46,8 +45,8 @@ const ConcertInfo = () => {
                     <MapPin className={classes.icon} />
                     <div>
                         <h3>장소</h3>
-                        <p>라디오가가 라이브홀</p>
-                        <p className={classes.smallText}>(서울특별시 마포구 서교동 양화로11길 54)</p>
+                        <p>그림라이브하우스</p>
+                        <p className={classes.smallText}>(서울 서대문구 연희로 14 B1층)</p>
                     </div>
                 </div>
             </div>
@@ -66,7 +65,7 @@ const ConcertInfo = () => {
                 </div>
 
                 <div className={classes.intermission}>
-                    Intermission (15분)
+                    Intermission
                 </div>
 
                 <div className={classes.part}>

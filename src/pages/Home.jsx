@@ -155,24 +155,22 @@ const Home = () => {
                                                     </div>
                                                 )}
                                                 <div className={classes.ticketHeader}>
-                                                    <span className={classes.ticketTitle}>ATEMPO 6기</span>
+                                                    <span className={classes.ticketTitle}>Atempo x Wave</span>
                                                 </div>
                                                 <div className={classes.ticketBody}>
                                                     <img
-                                                        src={`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(user.token || user.uid)}`}
+                                                        src={`https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(user.token || user.uid)}`}
                                                         alt="Ticket QR"
                                                         className={classes.qrCode}
                                                     />
                                                     <p className={classes.ticketName}>{user.name} 님</p>
-                                                    <p className={classes.ticketInfo}>2025.12.29 19:00 | 라디오가가</p>
-                                                </div>
-                                                <div className={classes.ticketFooter}>
-                                                    입장 시 이 QR코드를 보여주세요
+                                                    <p className={classes.ticketInfo}>2026.01.31 19:00 | 그림라이브하우스</p>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+
                             </>
                         ) : (
                             <div className={classes.posterCard}>
@@ -216,7 +214,7 @@ const Home = () => {
                             {/* Item 1: 18:30 (Left) */}
                             <div className={`${classes.timelineItem} ${classes.leftAlign}`}>
                                 <div className={classes.contentBox}>
-                                    <span className={classes.timeText}>18:30</span>
+                                    <span className={classes.timeText}>17:00</span>
                                     <div className={classes.itemTitle}>관객 입장</div>
                                 </div>
                                 <div className={`${classes.centerIcon} ${classes.iconGreen}`}>
@@ -232,7 +230,7 @@ const Home = () => {
                                     <Music size={16} />
                                 </div>
                                 <div className={classes.contentBox}>
-                                    <span className={classes.timeText}>19:00</span>
+                                    <span className={classes.timeText}>17:30</span>
                                     <div className={classes.itemTitle}>Wave 공연</div>
                                 </div>
                             </div>
@@ -240,7 +238,7 @@ const Home = () => {
                             {/* Item 3: 20:00 (Left) */}
                             <div className={`${classes.timelineItem} ${classes.leftAlign}`}>
                                 <div className={classes.contentBox}>
-                                    <span className={classes.timeText}>20:00</span>
+                                    <span className={classes.timeText}>18:30</span>
                                     <div className={classes.itemTitle}>Intermission</div>
                                 </div>
                                 <div className={`${classes.centerIcon} ${classes.iconYellow}`}>
@@ -256,7 +254,7 @@ const Home = () => {
                                     <Flame size={16} />
                                 </div>
                                 <div className={classes.contentBox}>
-                                    <span className={classes.timeText}>20:15</span>
+                                    <span className={classes.timeText}>18:40</span>
                                     <div className={classes.itemTitle}>Atempo 공연</div>
                                 </div>
                             </div>
