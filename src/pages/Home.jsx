@@ -233,7 +233,7 @@ const Home = () => {
                                 </div>
                                 <div className={classes.contentBox}>
                                     <span className={classes.timeText}>19:00</span>
-                                    <div className={classes.itemTitle}>1부 공연</div>
+                                    <div className={classes.itemTitle}>Wave 공연</div>
                                 </div>
                             </div>
 
@@ -257,7 +257,7 @@ const Home = () => {
                                 </div>
                                 <div className={classes.contentBox}>
                                     <span className={classes.timeText}>20:15</span>
-                                    <div className={classes.itemTitle}>2부 공연</div>
+                                    <div className={classes.itemTitle}>Atempo 공연</div>
                                 </div>
                             </div>
                         </div>

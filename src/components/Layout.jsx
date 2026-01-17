@@ -35,7 +35,7 @@ const Layout = () => {
             {/* Top Navigation */}
             <nav className={classes.navbar}>
                 <div className={classes.logo}>
-                    <Link to="/">🎵 Atempo</Link>
+                    <Link to="/">🎵 Atempo x Wave</Link>
                 </div>
                 <div
                     className={classes.navLinks}

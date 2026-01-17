@@ -38,8 +38,8 @@ const ConcertInfo = () => {
                     <Clock className={classes.icon} />
                     <div>
                         <h3>일시</h3>
-                        <p>2025년 12월 29일 (월)</p>
-                        <p className={classes.smallText}>저녁 7시</p>
+                        <p>2026년 1월 31일 (토)</p>
+                        <p className={classes.smallText}>오후 7시</p>
                     </div>
                 </div>
                 <div className={classes.infoRow}>
@@ -54,7 +54,7 @@ const ConcertInfo = () => {
 
             <div className={classes.setlistContainer}>
                 <div className={classes.part}>
-                    <h3 className={classes.partTitle}>1부</h3>
+                    <h3 className={classes.partTitle}>Wave</h3>
                     <ul className={classes.list}>
                         {setlist.part1.map(item => (
                             <li key={item.id} className={classes.item}>
@@ -70,7 +70,7 @@ const ConcertInfo = () => {
                 </div>
 
                 <div className={classes.part}>
-                    <h3 className={classes.partTitle}>2부</h3>
+                    <h3 className={classes.partTitle}>Atempo</h3>
                     <ul className={classes.list}>
                         {setlist.part2.filter(i => i.title !== 'Intermission').map(item => (
                             <li key={item.id} className={classes.item}>

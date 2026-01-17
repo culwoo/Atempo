@@ -1,6 +1,6 @@
 {
     "name": "melodic-functions",
-    "description": "Atempo 자동화 Cloud Functions (입금 감지 + SMS 발송)",
+    "description": "Atempo x Wave 자동화 Cloud Functions (입금 감지 + SMS 발송)",
     "scripts": {
         "serve": "firebase emulators:start --only functions",
         "shell": "firebase functions:shell",

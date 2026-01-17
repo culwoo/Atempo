@@ -182,16 +182,16 @@ exports.sendTicketSMS = onDocumentUpdated(
             const baseUrl = PUBLIC_BASE_URL.value() || "https://atempo.vercel.app";
             const ticketUrl = `${baseUrl.replace(/\/+$/, "")}/?auth=${token}`;
 
-            const subject = `[Atempo] ${name}님 예약이 완료되었습니다`;
-            const text = `[Atempo] ${name}님 예약이 완료되었습니다.\n\n아래 링크를 클릭하여 티켓을 확인하세요.\n${ticketUrl}`;
+            const subject = `[Atempo x Wave] ${name}님 예약이 완료되었습니다`;
+            const text = `[Atempo x Wave] ${name}님 예약이 완료되었습니다.\n\n아래 링크를 클릭하여 티켓을 확인하세요.\n${ticketUrl}`;
             const html = `
-                <p><strong>Atempo</strong> ${name}님 예약이 완료되었습니다.</p>
+                <p><strong>Atempo x Wave</strong> ${name}님 예약이 완료되었습니다.</p>
                 <p>아래 링크를 클릭하여 티켓을 확인하세요.</p>
                 <p><a href="${ticketUrl}">${ticketUrl}</a></p>
             `.trim();
 
             try {
-                const fromName = (EMAIL_FROM_NAME.value() || "Atempo").trim();
+                const fromName = (EMAIL_FROM_NAME.value() || "Atempo x Wave").trim();
                 const fromUser = (GMAIL_USER.value() || "").trim();
                 const transporter = getMailTransport();
 

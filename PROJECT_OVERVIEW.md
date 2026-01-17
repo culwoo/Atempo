@@ -89,3 +89,6 @@
 - **Backend/DB**: Firebase Firestore (실시간 데이터 동기화)
 - **Authentication**: Firebase Auth + Custom Token System (URL 쿼리 파라미터 인증)
 - **Styling**: CSS Modules (컴포넌트 단위 스타일링)
+
+## 7. 규칙 및 컨벤션
+- **언어**: 사용자와의 대화는 **한국어**로 진행한다.
