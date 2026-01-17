@@ -38,7 +38,7 @@ const ConcertInfo = () => {
                     <div>
                         <h3>일시</h3>
                         <p>2026년 1월 31일 (토)</p>
-                        <p className={classes.smallText}>오후 7시</p>
+                        <p className={classes.smallText}>오후 5시30분</p>
                     </div>
                 </div>
                 <div className={classes.infoRow}>
