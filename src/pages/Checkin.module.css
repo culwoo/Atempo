@@ -17,7 +17,7 @@
 }
 
 .header p {
-  color: #636e72;
+  color: var(--text-secondary);
 }
 
 .stats {
@@ -28,10 +28,10 @@
 }
 
 .statCard {
-  background: white;
+  background: var(--bg-secondary);
   border-radius: 14px;
   padding: 1rem;
-  border: 1px solid #e0e6ed;
+  border: 1px solid var(--text-secondary);
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
   display: flex;
   flex-direction: column;
@@ -41,7 +41,7 @@
 
 .statCard strong {
   font-size: 1.5rem;
-  color: #2d3436;
+  color: var(--text-primary);
 }
 
 .scanner {
@@ -55,10 +55,10 @@
   width: 100%;
   max-width: 420px;
   aspect-ratio: 4 / 5;
-  background: #111;
+  background: var(--bg-primary);
   border-radius: 20px;
   overflow: hidden;
-  border: 2px solid #111;
+  border: 2px solid var(--bg-primary);
   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
 }
 
@@ -83,17 +83,17 @@
 }
 
 .statusCard p {
-    margin: 0;
+  margin: 0;
 }
 
 .startScanButton {
-    padding: 0.8rem 1.4rem;
-    border-radius: 12px;
-    border: none;
-    background: #111;
-    color: #fff;
-    font-weight: 600;
-    cursor: pointer;
+  padding: 0.8rem 1.4rem;
+  border-radius: 12px;
+  border: none;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  font-weight: 600;
+  cursor: pointer;
 }
 
 .success {
@@ -107,13 +107,13 @@
 }
 
 .info {
-  background: #eef4ff;
-  color: #2c3e50;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
 }
 
 .loading {
-  background: #f1f2f6;
-  color: #636e72;
+  background: var(--bg-secondary);
+  color: var(--text-secondary);
 }
 
 .manual form {
@@ -127,7 +127,7 @@
   min-width: 240px;
   padding: 0.7rem 0.9rem;
   border-radius: 10px;
-  border: 1px solid #dfe6e9;
+  border: 1px solid var(--text-secondary);
   font-size: 0.95rem;
 }
 
@@ -135,7 +135,7 @@
   padding: 0.7rem 1.2rem;
   border-radius: 10px;
   border: none;
-  background: #6c5ce7;
+  background: var(--primary-color);
   color: white;
   font-weight: 600;
   cursor: pointer;

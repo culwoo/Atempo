@@ -2,7 +2,7 @@
     max-width: 400px;
     margin: 2rem auto;
     padding: 2rem;
-    background-color: white;
+    background-color: var(--bg-secondary);
     border-radius: 1rem;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     text-align: center;

@@ -4,7 +4,7 @@
     display: flex;
     flex-direction: column;
     font-family: 'Gamja Flower', cursive;
-    background-color: #fdfbf7;
+    background-color: var(--bg-primary);
     /* Warm background from index.css or similar */
 }
 
@@ -22,7 +22,7 @@
 .logo a {
     font-size: 1.8rem;
     font-weight: bold;
-    color: #6c5ce7;
+    color: var(--primary-color);
     /* Atempo Primary */
     text-decoration: none;
     display: flex;
@@ -39,14 +39,14 @@
 
 .link {
     text-decoration: none;
-    color: #2d3436;
+    color: var(--text-primary);
     font-size: 1.2rem;
     font-weight: bold;
     transition: color 0.2s;
 }
 
 .link:hover {
-    color: #6c5ce7;
+    color: var(--primary-color);
 }
 
 /* Status Bar - Previously it might have been inline or separate */
@@ -71,40 +71,40 @@
     align-items: center;
     gap: 1rem;
     font-size: 1rem;
-    border-bottom: 1px dashed #dfe6e9;
+    border-bottom: 1px dashed var(--text-secondary);
     /* Light separator */
 }
 
 .statusText {
-    color: #636e72;
+    color: var(--text-secondary);
     white-space: nowrap;
     /* Prevent breaking */
 }
 
 .nickname {
     font-weight: bold;
-    color: #e17055;
+    color: var(--accent-color);
     /* Warm accent */
 }
 
 .roleSwitchBtn {
-    background: #dfe6e9;
+    background: var(--bg-secondary);
     border: none;
     padding: 4px 10px;
     border-radius: 6px;
     cursor: pointer;
     font-size: 0.9rem;
-    color: #2d3436;
+    color: var(--text-primary);
     white-space: nowrap;
     /* Prevent breaking */
 }
 
 .roleSwitchBtn:hover {
-    background-color: #b2bec3;
+    background-color: var(--text-secondary);
 }
 
 .statusHint {
-    color: #e17055;
+    color: var(--accent-color);
     font-weight: 600;
     font-size: 0.9rem;
     white-space: nowrap;

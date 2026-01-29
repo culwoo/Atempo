@@ -28,17 +28,17 @@
     margin-top: 0;
     width: 100%;
     max-width: 280px;
-    background: white;
+    background: var(--bg-secondary);
     border-radius: 12px;
     padding: 0.75rem;
     box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08);
-    border: 1px solid #e5e9f0;
+    border: 1px solid var(--text-secondary);
     box-sizing: border-box;
 }
 
 .nicknameLabel {
     font-weight: 700;
-    color: #2d3436;
+    color: var(--text-primary);
     display: block;
     margin-bottom: 0.6rem;
 }
@@ -53,7 +53,7 @@
     flex: 1;
     padding: 0.6rem 0.7rem;
     border-radius: 10px;
-    border: 1px solid #dfe6e9;
+    border: 1px solid var(--text-secondary);
     font-size: 0.9rem;
     min-width: 0;
     box-sizing: border-box;
@@ -63,7 +63,7 @@
     padding: 0.6rem 0.9rem;
     border-radius: 10px;
     border: none;
-    background: #6c5ce7;
+    background: var(--primary-color);
     color: white;
     font-weight: 600;
     cursor: pointer;
@@ -144,11 +144,11 @@
     width: 100%;
     max-width: 280px;
     aspect-ratio: 2382 / 3369;
-    background: white;
+    background: var(--bg-secondary);
     border-radius: 16px;
     overflow: hidden;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
-    border: 1px solid #dfe6e9;
+    border: 1px solid var(--text-secondary);
     position: relative;
     display: flex;
     flex-direction: column;
@@ -176,7 +176,7 @@
     left: 0;
     right: 0;
     height: 6px;
-    background: linear-gradient(90deg, #6c5ce7, #a29bfe);
+    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
 }
 
 .ticketHeader {
@@ -185,17 +185,17 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 2px dashed #dfe6e9;
+    border-bottom: 2px dashed var(--text-secondary);
 }
 
 .ticketTitle {
     font-weight: bold;
-    color: #2d3436;
+    color: var(--text-primary);
     font-size: 1.1rem;
 }
 
 .ticketClass {
-    background: #6c5ce7;
+    background: var(--primary-color);
     color: white;
     padding: 4px 8px;
     border-radius: 4px;
@@ -209,7 +209,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background: #fafafa;
+    background: var(--bg-primary);
     width: 100%;
     flex: 1;
 }
@@ -225,19 +225,19 @@
 .ticketName {
     font-size: 1.2rem;
     font-weight: bold;
-    color: #2d3436;
+    color: var(--text-primary);
     margin-bottom: 0.2rem;
 }
 
 .ticketInfo {
-    color: #636e72;
+    color: var(--text-secondary);
     font-size: 0.9rem;
 }
 
 .ticketFooter {
     width: 100%;
     padding: 0.6rem;
-    background: #6c5ce7;
+    background: var(--primary-color);
     color: white;
     text-align: center;
     font-size: 0.9rem;
@@ -255,7 +255,7 @@
 
 .timelineHeader h2 {
     font-size: 1.5rem;
-    color: #2d3436;
+    color: var(--text-primary);
 }
 
 .timelineContainer {
@@ -331,7 +331,7 @@
 
 .itemTitle {
     font-size: 1rem;
-    color: #2d3436;
+    color: var(--text-primary);
     font-weight: bold;
 }
 

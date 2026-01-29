@@ -23,11 +23,17 @@ const Admin = () => {
     const [performersLoading, setPerformersLoading] = useState(true);
     const [performersError, setPerformersError] = useState('');
 
+    const [error, setError] = useState(null);
+
     useEffect(() => {
         const q = query(collection(db, "reservations"), orderBy("createdAt", "desc"));
         const unsubscribe = onSnapshot(q, (snapshot) => {
             const list = snapshot.docs.map(docSnap => ({ id: docSnap.id, ...docSnap.data() }));
             setReservations(list);
+            setError(null);
+        }, (err) => {
+            console.error("Reservations fetch error:", err);
+            setError("예약 정보를 불러오는데 실패했습니다: " + err.message);
         });
         return unsubscribe;
     }, []);
@@ -55,7 +61,7 @@ const Admin = () => {
             },
             (err) => {
                 console.error("Failed to load performers:", err);
-                setPerformersError("공연진 목록을 불러오지 못했습니다.");
+                setPerformersError("공연진 목록을 불러오지 못했습니다: " + err.message);
                 setPerformersLoading(false);
             }
         );
@@ -76,6 +82,18 @@ const Admin = () => {
         });
 
         alert(`${reservation.name} 예약을 승인했습니다. 곧 이메일이 발송됩니다.`);
+    };
+
+    const handleOnsiteApprove = async (id) => {
+        if (!window.confirm("현장 결제를 확인하셨습니까?")) return;
+
+        const reservation = reservations.find(r => r.id === id);
+        if (!reservation) return;
+
+        await updateDoc(doc(db, "reservations", id), {
+            status: 'onsite_paid',
+            depositTime: new Date().toISOString()
+        });
     };
 
     const handleDeleteReservation = async (id) => {
@@ -124,6 +142,32 @@ const Admin = () => {
         }
     };
 
+    const handleResetPerformerPassword = async (performer) => {
+        if (!user?.isAdmin) return;
+
+        const newPassword = prompt(`"${performer.name || performer.email}" 계정의 새로운 비밀번호를 입력하세요. (6자 이상)`);
+        if (newPassword === null) return; // Cancelled
+        if (newPassword.trim().length < 6) {
+            alert("비밀번호는 6자 이상이어야 합니다.");
+            return;
+        }
+
+        try {
+            const callAdminResetPassword = httpsCallable(functions, "adminResetPassword");
+            await callAdminResetPassword({ uid: performer.uid, newPassword: newPassword.trim() });
+            alert("비밀번호가 변경되었습니다.");
+        } catch (err) {
+            console.error("Failed to reset password:", err);
+            alert("비밀번호 변경 실패: " + err.message);
+        }
+    };
+
+    const handleUpdateVisitedFor = async (id, value) => {
+        await updateDoc(doc(db, "reservations", id), {
+            visitedFor: value
+        });
+    };
+
     const getTimestampValue = (value) => {
         if (!value) return 0;
         const date = value?.seconds ? new Date(value.seconds * 1000) : new Date(value);
@@ -163,7 +207,20 @@ const Admin = () => {
 
     return (
         <div className={classes.container}>
-            <h2 className={classes.header}>관리자 대시보드</h2>
+            <h2 className={classes.header}>
+                관리자 대시보드
+                <span className={classes.totalCount}>
+                    (총 {reservations.length}명)
+                </span>
+            </h2>
+
+            {error && (
+                <div className={classes.errorBanner} style={{ backgroundColor: '#fee2e2', color: '#dc2626', padding: '1rem', marginBottom: '1rem', borderRadius: '0.5rem' }}>
+                    <strong>오류 발생:</strong> {error}
+                    <br />
+                    <small>Firebase 연결 상태나 권한을 확인해주세요.</small>
+                </div>
+            )}
 
             <div className={classes.grid}>
                 <div className={classes.card}>
@@ -179,6 +236,8 @@ const Admin = () => {
                                 <tr>
                                     <th>이름</th>
                                     <th>상태</th>
+                                    <th>체크인</th>
+                                    <th>방문 목적</th>
                                     <th>링크</th>
                                     <th>관리</th>
                                 </tr>
@@ -197,8 +256,36 @@ const Admin = () => {
                                         </td>
                                         <td>
                                             <span className={`${classes.badge} ${classes[res.status]}`}>
-                                                {res.status === 'paid' ? '확정' : res.status === 'pending' ? '대기' : '확인필요'}
+                                                {res.status === 'paid' ? '확정' :
+                                                    res.status === 'pending' ? '대기' :
+                                                        res.status === 'onsite_pending' ? '현장대기' :
+                                                            res.status === 'onsite_paid' ? '현장완료' : '확인필요'}
                                             </span>
+                                        </td>
+                                        <td>
+                                            {res.checkedIn ? (
+                                                <div className={classes.checkinInfo}>
+                                                    <span className={classes.checkinBadge}>완료</span>
+                                                    <small>{(() => {
+                                                        if (!res.checkedInAt) return '';
+                                                        const date = res.checkedInAt.seconds ? new Date(res.checkedInAt.seconds * 1000) : new Date(res.checkedInAt);
+                                                        return date.toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit' });
+                                                    })()}</small>
+                                                </div>
+                                            ) : (
+                                                <span className={classes.noCheckin}>-</span>
+                                            )}
+                                        </td>
+                                        <td>
+                                            <select
+                                                className={classes.visitSelect}
+                                                value={res.visitedFor || ''}
+                                                onChange={(e) => handleUpdateVisitedFor(res.id, e.target.value)}
+                                            >
+                                                <option value="">선택</option>
+                                                <option value="Wave">Wave</option>
+                                                <option value="Atempo">Atempo</option>
+                                            </select>
                                         </td>
                                         <td>
                                             {res.status === 'paid' && (
@@ -215,7 +302,10 @@ const Admin = () => {
                                             )}
                                         </td>
                                         <td>
-                                            {res.status !== 'paid' && (
+                                            {res.status === 'onsite_pending' && (
+                                                <button onClick={() => handleOnsiteApprove(res.id)}>현장확인</button>
+                                            )}
+                                            {res.status === 'pending' && (
                                                 <button onClick={() => handleManualApprove(res.id)}>승인</button>
                                             )}
                                             <button
@@ -289,6 +379,7 @@ const Admin = () => {
                                                 <th>이름</th>
                                                 <th>이메일</th>
                                                 <th>가입일</th>
+                                                <th>가입일</th>
                                                 <th>관리</th>
                                             </tr>
                                         </thead>
@@ -299,6 +390,13 @@ const Admin = () => {
                                                     <td>{performer.email || '-'}</td>
                                                     <td>{formatTimestamp(performer.createdAt)}</td>
                                                     <td>
+                                                        <button
+                                                            className={classes.linkBtn}
+                                                            onClick={() => handleResetPerformerPassword(performer)}
+                                                            style={{ marginRight: '0.5rem' }}
+                                                        >
+                                                            비밀번호 변경
+                                                        </button>
                                                         <button
                                                             className={classes.deleteBtn}
                                                             onClick={() => handleDeletePerformer(performer)}

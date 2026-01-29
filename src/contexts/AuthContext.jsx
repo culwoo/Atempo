@@ -2,7 +2,7 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 import { generateNickname } from '../utils/nickname';
 import {
     auth, db,
-    onAuthStateChanged, signInWithEmailAndPassword, signOut as firebaseSignOut, createUserWithEmailAndPassword, updateProfile,
+    onAuthStateChanged, signInWithEmailAndPassword, signOut as firebaseSignOut, createUserWithEmailAndPassword, updateProfile, sendPasswordResetEmail,
     doc, setDoc, functions, httpsCallable
 } from '../api/firebase';
 import { isAdminEmail } from '../config/admins';
@@ -74,6 +74,10 @@ export const AuthProvider = ({ children }) => {
             role: 'performer',
             isAdmin: isAdminEmail(res.user.email)
         });
+    };
+
+    const resetPassword = (email) => {
+        return sendPasswordResetEmail(auth, email);
     };
 
     const performerLogout = async () => {
@@ -171,7 +175,9 @@ export const AuthProvider = ({ children }) => {
         audienceLogin,
         logout,
         updateNickname,
-        verifyToken
+        updateNickname,
+        verifyToken,
+        resetPassword
     };
 
     return (

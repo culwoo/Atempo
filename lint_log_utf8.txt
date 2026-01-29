@@ -1,0 +1,155 @@
+﻿
+> melodicapp@0.0.0 lint
+> eslint .
+
+
+C:\Users\culwo\OneDrive\諛뷀깢 ?붾㈃\泥좎슦\1??媛쒕컻\Atempo\functions\index.js
+    8:43  error  'require' is not defined  no-undef
+    9:31  error  'require' is not defined  no-undef
+   10:27  error  'require' is not defined  no-undef
+   11:26  error  'require' is not defined  no-undef
+   12:21  error  'require' is not defined  no-undef
+   13:26  error  'require' is not defined  no-undef
+   14:20  error  'require' is not defined  no-undef
+   64:1   error  'exports' is not defined  no-undef
+  149:1   error  'exports' is not defined  no-undef
+  227:1   error  'exports' is not defined  no-undef
+  241:1   error  'exports' is not defined  no-undef
+
+C:\Users\culwo\OneDrive\諛뷀깢 ?붾㈃\泥좎슦\1??媛쒕컻\Atempo\src\components\AudienceEntry.jsx
+  3:10  error  'generateNickname' is defined but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+
+C:\Users\culwo\OneDrive\諛뷀깢 ?붾㈃\泥좎슦\1??媛쒕컻\Atempo\src\components\AuthHandler.jsx
+  6:26  error  'setSearchParams' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+
+C:\Users\culwo\OneDrive\諛뷀깢 ?붾㈃\泥좎슦\1??媛쒕컻\Atempo\src\components\StickyNote.jsx
+   2:10  error  'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 no-unused-vars
+  11:22  error  Error: Cannot call impure function during render
+
+`Math.random` is an impure function. Calling an impure function can produce unstable results that update unpredictably when the component happens to re-render. (https://react.dev/reference/rules/components-and-hooks-must-be-pure#components-and-hooks-must-be-idempotent).
+
+   9 |
+  10 |     // Random slight rotation for natural look (stable based on content length or id if real)
+> 11 |     const rotation = Math.random() * 6 - 3;
+     |                      ^^^^^^^^^^^^^ Cannot call impure function
+  12 |
+  13 |     return (
+  14 |         <motion.div  react-hooks/purity
+
+C:\Users\culwo\OneDrive\諛뷀깢 ?붾㈃\泥좎슦\1??媛쒕컻\Atempo\src\components\WriteModal.jsx
+  36:13  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+  34 |     useEffect(() => {
+  35 |         if (postToEdit) {
+> 36 |             setContent(postToEdit.content || '');
+     |             ^^^^^^^^^^ Avoid calling setState() directly within an effect
+  37 |             setSelectedColor(postToEdit.color || POST_COLORS[0]);
+  38 |             setIsPublic(postToEdit.isPublic);
+  39 |  react-hooks/set-state-in-effect
+
+C:\Users\culwo\OneDrive\諛뷀깢 ?붾㈃\泥좎슦\1??媛쒕컻\Atempo\src\contexts\AuthContext.jsx
+  12:14  error  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+
+C:\Users\culwo\OneDrive\諛뷀깢 ?붾㈃\泥좎슦\1??媛쒕컻\Atempo\src\pages\Admin.jsx
+  51:37  error  Error: Cannot access variable before it is declared
+
+`getTimestampValue` is accessed before it is declared, which prevents the earlier access from updating when this value changes over time.
+
+  49 |                 const list = snapshot.docs
+  50 |                     .map(docSnap => ({ id: docSnap.id, ...docSnap.data() }))
+> 51 |                     .sort((a, b) => getTimestampValue(b.createdAt) - getTimestampValue(a.createdAt));
+     |                                     ^^^^^^^^^^^^^^^^^ `getTimestampValue` accessed before it is declared
+  52 |                 setPerformers(list);
+  53 |                 setPerformersLoading(false);
+  54 |                 setPerformersError('');
+
+  125 |     };
+  126 |
+> 127 |     const getTimestampValue = (value) => {
+      |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 128 |         if (!value) return 0;
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 129 |         const date = value?.seconds ? new Date(value.seconds * 1000) : new Date(value);
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 130 |         const time = date.getTime();
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 131 |         return Number.isNaN(time) ? 0 : time;
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 132 |     };
+      | ^^^^^^^ `getTimestampValue` is declared here
+  133 |
+  134 |     const formatTimestamp = (value) => {
+  135 |         if (!value) return '-';  react-hooks/immutability
+  71:30  error  Error: Cannot call impure function during render
+
+`Math.random` is an impure function. Calling an impure function can produce unstable results that update unpredictably when the component happens to re-render. (https://react.dev/reference/rules/components-and-hooks-must-be-pure#components-and-hooks-must-be-idempotent).
+
+  69 |         if (!reservation) return;
+  70 |
+> 71 |         const token = 'm_' + Math.random().toString(36).substr(2, 9);
+     |                              ^^^^^^^^^^^^^ Cannot call impure function
+  72 |         await updateDoc(doc(db, "reservations", id), {
+  73 |             status: 'paid',
+  74 |             depositTime: new Date().toISOString(),                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                react-hooks/purity
+
+C:\Users\culwo\OneDrive\諛뷀깢 ?붾㈃\泥좎슦\1??媛쒕컻\Atempo\src\pages\Checkin.jsx
+   84:22  error  'error' is defined but never used          no-unused-vars
+  110:22  error  'error' is defined but never used          no-unused-vars
+  113:26  error  'fallbackError' is defined but never used  no-unused-vars
+  174:18  error  'error' is defined but never used          no-unused-vars
+
+C:\Users\culwo\OneDrive\諛뷀깢 ?붾㈃\泥좎슦\1??媛쒕컻\Atempo\src\pages\Home.jsx
+  23:9   error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+  21 |     useEffect(() => {
+  22 |         if (!user?.isVerified) return;
+> 23 |         setHintSpin(true);
+     |         ^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  24 |         const timer = setTimeout(() => {
+  25 |             setHintSpin(false);
+  26 |         }, 1200);                                                     react-hooks/set-state-in-effect
+  32:13  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+  30 |     useEffect(() => {
+  31 |         if (user?.isVerified) {
+> 32 |             setNickname(user.name || '');
+     |             ^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  33 |         }
+  34 |     }, [user?.isVerified, user?.name]);
+  35 |                                                                                  react-hooks/set-state-in-effect
+  38:13  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+  36 |     useEffect(() => {
+  37 |         if (!user?.isVerified || !user?.reservationId) {
+> 38 |             setCheckinStatus(null);
+     |             ^^^^^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  39 |             return;
+  40 |         }
+  41 |         const reservationRef = doc(db, 'reservations', user.reservationId);  react-hooks/set-state-in-effect
+
+??26 problems (26 errors, 0 warnings)
+

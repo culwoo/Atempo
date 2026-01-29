@@ -8,7 +8,7 @@ const ConcertInfo = () => {
             { id: 1, title: "기억을 걷는 시간", artist: "넬" },
             { id: 2, title: "고백", artist: "델리스파이스" },
             { id: 3, title: "혜성", artist: "윤하" },
-            { id: 4, title: "Pretender", artist: "오피셜 히게단디즘" },
+            { id: 4, title: "Pretender", artist: "Official髭男dism" },
             { id: 5, title: "여우야", artist: "더클래식" },
             { id: 6, title: "슈퍼스타", artist: "이한철" },
             { id: 7, title: "Last Night on Earth", artist: "Green Day" },
@@ -16,15 +16,22 @@ const ConcertInfo = () => {
             { id: 9, title: "Don't Look Back in Anger", artist: "Oasis" }
         ],
         part2: [
-            { id: 11, title: "검을 현", artist: "이승윤" },
-            { id: 12, title: "Oddities", artist: "The Poles" },
-            { id: 13, title: "용의자", artist: "한로로" },
-            { id: 14, title: "Ditto", artist: "NewJeans" },
-            { id: 15, title: "만찬가", artist: "tuki." },
-            { id: 16, title: "It's My Life", artist: "Bon Jovi" },
-            { id: 17, title: "bad", artist: "wave to earth" },
-            { id: 18, title: "Stargazing", artist: "The Poles" },
-            { id: 19, title: "아지랑이", artist: "쏜애플" }
+            { id: 11, title: "파도", artist: "새소년" },
+            { id: 12, title: "저녁을 사랑하겠어", artist: "연정" },
+            { id: 13, title: "사랑의 미학", artist: "리도어" },
+            { id: 14, title: "PINK TOP", artist: "The Volunteers" },
+            { id: 15, title: "S.A.D", artist: "The Volunteers" },
+            { id: 16, title: "꿈을 꾸는 소녀", artist: "Xdinary Heroes" },
+            { id: 17, title: "바이, 썸머", artist: "아이유" },
+            { id: 18, title: "오늘이야", artist: "유다빈밴드" },
+            { id: 19, title: "Just the two of us", artist: "Bill Withers 및 Grover Washington, Jr." },
+            { id: 20, title: "한시 오분", artist: "검정치마" },
+            { id: 21, title: "백일몽", artist: "유다빈밴드" },
+            { id: 22, title: "annie.", artist: "wave to earth" },
+            { id: 23, title: "SQUARE", artist: "백예린" },
+            { id: 24, title: "행운을 빌어요", artist: "페퍼톤스" },
+            { id: 25, title: "FIND ME!", artist: "The Poles" },
+            { id: 26, title: "Welcome to the Black Parade", artist: "My Chemical Romance" }
         ]
     };
 
@@ -38,7 +45,7 @@ const ConcertInfo = () => {
                     <div>
                         <h3>일시</h3>
                         <p>2026년 1월 31일 (토)</p>
-                        <p className={classes.smallText}>오후 7시</p>
+                        <p className={classes.smallText}>오후 5시30분</p>
                     </div>
                 </div>
                 <div className={classes.infoRow}>
@@ -65,7 +72,9 @@ const ConcertInfo = () => {
                 </div>
 
                 <div className={classes.intermission}>
-                    Intermission
+                    <div className={classes.intermissionLine}></div>
+                    <span className={classes.intermissionText}>Intermission</span>
+                    <div className={classes.intermissionLine}></div>
                 </div>
 
                 <div className={classes.part}>

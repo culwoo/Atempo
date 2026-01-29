@@ -238,6 +238,29 @@ exports.deletePerformer = onCall({ region: "asia-northeast3" }, async (request) 
     return { success: true };
 });
 
+exports.adminResetPassword = onCall({ region: "asia-northeast3" }, async (request) => {
+    requireAdmin(request);
+
+    const uid = (request.data?.uid || "").trim();
+    const newPassword = (request.data?.newPassword || "").trim();
+
+    if (!uid || !newPassword) {
+        throw new HttpsError("invalid-argument", "uid and newPassword are required.");
+    }
+    if (newPassword.length < 6) {
+        throw new HttpsError("invalid-argument", "Password must be at least 6 characters.");
+    }
+
+    try {
+        await getAuth().updateUser(uid, {
+            password: newPassword
+        });
+        return { success: true };
+    } catch (error) {
+        throw new HttpsError("internal", error.message);
+    }
+});
+
 exports.verifyTicket = onCall({ region: "asia-northeast3" }, async (request) => {
     const rawToken = request.data?.token || "";
     const token = String(rawToken).trim();

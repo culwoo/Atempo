@@ -161,13 +161,13 @@ const Reservation = () => {
             >
               {accountNumber}
             </button>
-            <p className={classes.accountName}>예금주 백서윤</p>
+            <p className={classes.accountName}>예금주 백서윤 (터치하여 복사)</p>
             <p className={classes.amount}>
               입금하실 금액: <strong>5,000원</strong>
             </p>
           </div>
           <p className={classes.guideText}>
-            입금이 확인되면 이메일로 티켓을 보내드립니다.
+            입금 시 이메일로 티켓이 발송됩니다.
           </p>
           <p className={classes.guideText}>
             이메일이 보이지 않으면 메일함에서{" "}
@@ -175,7 +175,7 @@ const Reservation = () => {
             확인해주세요.
           </p>
           <p className={classes.guideText}>
-            문의사항이 있을 경우 <strong>010-6352-8975</strong>으로 연락 주세요.
+            📱문의: <strong>010-6352-8975</strong>
           </p>
           <p className={classes.warningText}>
             반드시 신청하신 <strong>"{name}"</strong> 입금자명으로 입금해

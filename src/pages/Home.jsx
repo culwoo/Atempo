@@ -164,7 +164,7 @@ const Home = () => {
                                                         className={classes.qrCode}
                                                     />
                                                     <p className={classes.ticketName}>{user.name} 님</p>
-                                                    <p className={classes.ticketInfo}>2026.01.31 19:00 | 그림라이브하우스</p>
+                                                    <p className={classes.ticketInfo}>2026.01.31 17:30 | 그림라이브하우스</p>
                                                 </div>
                                             </div>
                                         </div>

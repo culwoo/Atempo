@@ -8,16 +8,16 @@
   --font-hand: 'Gamja Flower', cursive;
 
   /* Colors (Cozy Studio Palette) */
-  --primary-color: #ff6b6b;
+  --primary-color: #d04c31;
   --soft-green: #2d6a4f;
   /* Strong green for filled icon */
   --soft-blue: #0077b6;
   /* Strong blue for filled icon */
-  --soft-yellow: #ca8a04;
+  --soft-yellow: #f6c458;
   /* Strong yellow for filled icon */
-  --bg-color: #fdfbf7;
-  --text-primary: #2c2c2c;
-  --text-secondary: #5c5c5c;
+  --bg-color: #131011;
+  --text-primary: #efefef;
+  --text-secondary: #c8c9c9;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -71,7 +71,7 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
-@media (prefers-color-scheme: light) {
+/* @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
     background-color: #ffffff;
@@ -84,4 +84,4 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
-}
+} */

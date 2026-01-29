@@ -80,7 +80,7 @@ const WriteModal = ({ onClose, postToEdit = null }) => {
             const postData = {
                 content: content,
                 isPublic: isPublic,
-                visibleTo: isPublic ? [] : [user.uid, ...selectedPerformers].filter(Boolean), // Author + Selected
+                visibleTo: isPublic ? [] : [user?.uid, ...selectedPerformers].filter(Boolean), // Author + Selected
                 toNames: toNames,
                 color: selectedColor,
                 // Do not update createdAt on edit, or maybe update `updatedAt`?
@@ -93,8 +93,8 @@ const WriteModal = ({ onClose, postToEdit = null }) => {
                 // New Post
                 await addDoc(collection(db, "posts"), {
                     ...postData,
-                    from: user.name,
-                    fromUid: user.uid || 'anonymous',
+                    from: user?.name || '익명',
+                    fromUid: user?.uid || 'anonymous',
                     createdAt: new Date().toISOString()
                 });
             }

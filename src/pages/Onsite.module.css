@@ -1,0 +1,161 @@
+.container {
+    padding: 2rem;
+    max-width: 500px;
+    margin: 0 auto;
+    text-align: center;
+    font-family: 'Gamja Flower', cursive;
+}
+
+.title {
+    font-size: 2rem;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+}
+
+.subtitle {
+    color: var(--text-secondary);
+    margin-bottom: 2rem;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    text-align: left;
+}
+
+.inputGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.inputGroup label {
+    font-size: 1.1rem;
+    color: var(--text-primary);
+    font-weight: bold;
+}
+
+.inputGroup input {
+    padding: 12px;
+    border: 2px solid var(--text-secondary);
+    border-radius: 8px;
+    font-size: 1rem;
+    font-family: inherit;
+    transition: border-color 0.2s;
+}
+
+.inputGroup input:focus {
+    border-color: var(--primary-color);
+    outline: none;
+}
+
+.submitBtn {
+    margin-top: 1rem;
+    padding: 14px;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+
+.submitBtn:hover {
+    background-color: var(--primary-color);
+}
+
+.submitBtn:disabled {
+    background-color: var(--text-secondary);
+    cursor: not-allowed;
+}
+
+.successStep {
+    animation: fadeIn 0.5s ease-out;
+}
+
+.successTitle {
+    color: #4CAF50;
+    font-size: 1.6rem;
+    margin-bottom: 1rem;
+}
+
+.amount {
+    font-size: 1.5rem;
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+}
+
+.bankBox {
+    background-color: var(--bg-secondary);
+    padding: 20px;
+    border-radius: 12px;
+    border: 2px dashed var(--text-secondary);
+    margin-bottom: 2rem;
+}
+
+.bankCopyBtn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.3rem;
+    color: var(--text-primary);
+    font-weight: bold;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+}
+
+.bankOwner {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-top: 0.5rem;
+}
+
+.appLinkBox {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 2rem;
+}
+
+.appBtn {
+    flex: 1;
+    padding: 12px;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 8px;
+    text-decoration: none;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.tossBtn {
+    background-color: #0064FF;
+}
+
+.kakaoBtn {
+    background-color: #FEE500;
+    color: #000000;
+}
+
+.guideText {
+    margin-top: 2rem;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: var(--text-primary);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

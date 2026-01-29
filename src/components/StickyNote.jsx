@@ -19,7 +19,7 @@ const StickyNote = ({ post, isMine, canDelete, onDelete, onEdit }) => {
             style={{
                 backgroundColor: post.color || '#FFF9B0',
                 rotate: rotation,
-                border: isMine ? '2px solid #FF6B6B' : 'none'
+                border: isMine ? '2px solid var(--primary-color)' : 'none'
             }}
         >
             {(isMine || canDelete) && (

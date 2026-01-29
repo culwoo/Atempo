@@ -32,7 +32,7 @@
 }
 
 .card {
-    background-color: white;
+    background-color: var(--bg-secondary);
     padding: 2rem;
     border-radius: 1rem;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
@@ -48,7 +48,7 @@
 
 .input {
     padding: 0.8rem;
-    border: 1px solid #DDD;
+    border: 1px solid var(--text-secondary);
     border-radius: 8px;
     font-family: var(--font-main);
     font-size: 1rem;
@@ -76,7 +76,7 @@
 }
 
 .randomBtn:hover {
-    background-color: #E0E0D0;
+    background-color: var(--text-secondary);
 }
 
 .submitBtn {
@@ -90,5 +90,5 @@
 }
 
 .submitBtn:hover {
-    background-color: #ff7597;
+    background-color: var(--primary-color);
 }

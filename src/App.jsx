@@ -11,6 +11,7 @@ import Admin from './pages/Admin';
 import Checkin from './pages/Checkin';
 import AuthHandler from './components/AuthHandler';
 import ProtectedRoute from './components/ProtectedRoute';
+import Onsite from './pages/Onsite';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Route index element={<Home />} />
           <Route path="performer/login" element={<PerformerAuth />} />
           <Route path="reserve" element={<Reservation />} />
+          <Route path="onsite" element={<Onsite />} />
           <Route
             path="admin"
             element={(

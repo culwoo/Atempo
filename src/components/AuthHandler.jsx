@@ -8,7 +8,7 @@ const AuthHandler = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        const token = searchParams.get('auth');
+        const token = searchParams.get('auth') || searchParams.get('token');
         if (token) {
             verifyToken(token).then(success => {
                 if (!success) {
