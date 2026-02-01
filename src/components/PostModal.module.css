@@ -1,0 +1,285 @@
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    backdrop-filter: blur(4px);
+    padding: 1rem;
+}
+
+.modal {
+    background-color: #fff;
+    width: 500px;
+    max-width: 95%;
+    max-height: 85vh;
+    padding: 2rem;
+    border-radius: 8px;
+    /* Slightly rounded, but keeps sticky note feel */
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    font-family: var(--font-hand);
+    position: relative;
+    overflow-y: auto;
+    animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes popIn {
+    from {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px dashed rgba(0, 0, 0, 0.1);
+    padding-bottom: 0.5rem;
+}
+
+.fromInfo {
+    display: flex;
+    flex-direction: column;
+}
+
+.from {
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: #2d3436;
+    margin-bottom: 0.2rem;
+}
+
+.date {
+    font-size: 0.85rem;
+    color: #636e72;
+}
+
+.closeBtn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #636e72;
+    padding: 4px;
+    transition: color 0.2s, transform 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.closeBtn:hover {
+    color: #2d3436;
+    transform: scale(1.1);
+}
+
+.contentBody {
+    flex: 1;
+    margin-bottom: 1.5rem;
+    overflow-y: auto;
+    min-height: 100px;
+    /* Custom Scrollbar for aesthetic */
+    scrollbar-width: thin;
+    scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
+}
+
+.content {
+    font-size: 1.2rem;
+    line-height: 1.6;
+    color: #2d3436;
+    white-space: pre-wrap;
+    /* Preserves line breaks */
+    word-break: break-all;
+}
+
+.footer {
+    border-top: 1px dashed rgba(0, 0, 0, 0.1);
+    padding-top: 1rem;
+    /* margin-bottom: 1rem; Remove margin if comments are added below */
+}
+
+.toLabel {
+    font-size: 0.9rem;
+    color: #636e72;
+    margin-bottom: 0.5rem;
+    display: block;
+    font-weight: bold;
+}
+
+.recipientList {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.recipientBadge {
+    background-color: rgba(255, 255, 255, 0.5);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 4px 10px;
+    border-radius: 15px;
+    font-size: 0.9rem;
+    color: #2d3436;
+}
+
+/* Comment Section Styles */
+.commentSection {
+    margin-top: 1.5rem;
+    border-top: 2px solid rgba(0, 0, 0, 0.1);
+    padding-top: 1rem;
+}
+
+.commentHeader {
+    font-size: 1rem;
+    font-weight: bold;
+    color: #2d3436;
+    margin-bottom: 1rem;
+}
+
+.commentList {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    margin-bottom: 1rem;
+    max-height: 200px;
+    overflow-y: auto;
+    padding-right: 0.5rem;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
+}
+
+.commentItem {
+    background-color: rgba(255, 255, 255, 0.4);
+    padding: 0.8rem;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    position: relative;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.commentAuthor {
+    font-weight: bold;
+    font-size: 0.9rem;
+    margin-right: 0.5rem;
+    color: #2d3436;
+}
+
+.commentDate {
+    font-size: 0.75rem;
+    color: #636e72;
+    margin-left: 0.5rem;
+}
+
+.commentText {
+    margin-top: 0.3rem;
+    color: #2d3436;
+    white-space: pre-wrap;
+    word-break: break-all;
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+
+.deleteCommentBtn {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background: none;
+    border: none;
+    color: #b2bec3;
+    cursor: pointer;
+    padding: 2px;
+}
+
+.deleteCommentBtn:hover {
+    color: #d63031;
+}
+
+.commentForm {
+    display: flex;
+    gap: 0.5rem;
+    align-items: flex-start;
+}
+
+.commentInput {
+    flex: 1;
+    padding: 0.8rem;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 8px;
+    background-color: rgba(255, 255, 255, 0.8);
+    resize: none;
+    height: 40px;
+    /* Initial height */
+    font-family: inherit;
+    font-size: 0.95rem;
+    transition: border-color 0.2s;
+}
+
+.commentInput:focus {
+    outline: none;
+    border-color: #74b9ff;
+    background-color: #fff;
+}
+
+.submitBtn {
+    background-color: #2d3436;
+    color: white;
+    border: none;
+    padding: 0 1rem;
+    height: 40px;
+    /* Match input height */
+    border-radius: 8px;
+    font-family: inherit;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    white-space: nowrap;
+}
+
+.submitBtn:hover {
+    background-color: #000;
+}
+
+.submitBtn:disabled {
+    background-color: #b2bec3;
+    cursor: not-allowed;
+}
+
+/* Mobile Adjustments */
+@media (max-width: 600px) {
+    .modal {
+        padding: 1.5rem;
+        width: 90%;
+    }
+
+    .from {
+        font-size: 1.1rem;
+    }
+
+    .content {
+        font-size: 1.1rem;
+    }
+
+    .commentForm {
+        flex-direction: column;
+    }
+
+    .commentInput {
+        width: 100%;
+    }
+
+    .submitBtn {
+        width: 100%;
+        margin-top: 0.5rem;
+    }
+}

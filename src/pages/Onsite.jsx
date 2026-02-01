@@ -8,7 +8,7 @@ const Onsite = () => {
   const [step, setStep] = useState(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const accountNumber = "카카오뱅크 7942-20-95501";
-  const amount = 5000;
+  const amount = 6000;
 
   const handleSubmit = async (e) => {
     e.preventDefault();

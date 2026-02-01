@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { db, collection, addDoc, doc, updateDoc } from "../api/firebase";
+import React, { useState, useEffect } from "react";
+import { db, collection, addDoc, doc, updateDoc, onSnapshot } from "../api/firebase";
 import classes from "./Reservation.module.css";
 
 const Reservation = () => {
@@ -68,9 +68,34 @@ const Reservation = () => {
     }
   };
 
+  const [isReservationClosed, setIsReservationClosed] = useState(true);
+
+  useEffect(() => {
+    const unsubscribe = onSnapshot(doc(db, "settings", "global"), (docSnap) => {
+      if (docSnap.exists()) {
+        setIsReservationClosed(docSnap.data().isReservationClosed);
+      }
+    });
+    return unsubscribe;
+  }, []);
+
   return (
     <div className={classes.container}>
-      {step === 1 ? (
+      {isReservationClosed ? (
+        <div className={classes.closedContainer} style={{ textAlign: "center", padding: "4rem 1rem" }}>
+          <h2 className={classes.title}>사전 예매가 마감되었습니다</h2>
+          <p className={classes.subtitle} style={{ marginTop: "2rem", fontSize: "1.1rem", lineHeight: "1.6" }}>
+            공연 당일이 되어 온라인 예매가 종료되었습니다.
+            <br />
+            <strong>현장 예매</strong>를 이용해 주시기 바랍니다.
+          </p>
+          <div style={{ marginTop: "3rem", color: "var(--text-secondary)" }}>
+            <p>
+              문의: <strong>010-6352-8975</strong>
+            </p>
+          </div>
+        </div>
+      ) : step === 1 ? (
         <>
           <h2 className={classes.title}>공연 예매하기</h2>
           <p className={classes.subtitle}>

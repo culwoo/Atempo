@@ -1,12 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Image, DoorOpen, Music, Coffee, Flame } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
-import { db, doc, onSnapshot } from '../api/firebase';
+import { db, doc, onSnapshot, collection, query, where } from '../api/firebase';
 import AudienceEntry from '../components/AudienceEntry';
 import classes from './Home.module.css';
 
 const Home = () => {
-    const { user, updateNickname } = useAuth();
+    const { user, updateNickname, authInitialized } = useAuth();
     const [rotationBase, setRotationBase] = useState(0);
     const [dragRotation, setDragRotation] = useState(0);
     const [isDragging, setIsDragging] = useState(false);
@@ -34,24 +34,53 @@ const Home = () => {
     }, [user?.isVerified, user?.name]);
 
     useEffect(() => {
-        if (!user?.isVerified || !user?.reservationId) {
+        if (!user?.isVerified || !authInitialized) {
             setCheckinStatus(null);
             return;
         }
-        const reservationRef = doc(db, 'reservations', user.reservationId);
-        const unsubscribe = onSnapshot(reservationRef, (snap) => {
-            if (!snap.exists()) {
-                setCheckinStatus(null);
-                return;
-            }
-            const data = snap.data();
-            setCheckinStatus({
-                checkedIn: Boolean(data.checkedIn),
-                checkedInAt: data.checkedInAt || null
+
+        let unsubscribe;
+
+        if (user.token) {
+            // Priority 1: Token is the most reliable identifier (handles DB resets/stale IDs)
+            const q = query(collection(db, 'reservations'), where('token', '==', user.token));
+            unsubscribe = onSnapshot(q, (snapshot) => {
+                if (snapshot.empty) {
+                    // Only log, don't nullify immediately if we want to try fallback? 
+                    // But token should be unique. if empty, it's invalid.
+                    setCheckinStatus(null);
+                    return;
+                }
+                const data = snapshot.docs[0].data();
+                setCheckinStatus({
+                    checkedIn: Boolean(data.checkedIn),
+                    checkedInAt: data.checkedInAt || null
+                });
+            }, (err) => {
+                console.error("Token snapshot error:", err);
             });
-        });
-        return unsubscribe;
-    }, [user?.isVerified, user?.reservationId]);
+        } else if (user.reservationId) {
+            // Priority 2: Fallback to ID if token is missing (legacy support)
+            const reservationRef = doc(db, 'reservations', user.reservationId);
+            unsubscribe = onSnapshot(reservationRef, (snap) => {
+                if (!snap.exists()) {
+                    setCheckinStatus(null);
+                    return;
+                }
+                const data = snap.data();
+                setCheckinStatus({
+                    checkedIn: Boolean(data.checkedIn),
+                    checkedInAt: data.checkedInAt || null
+                });
+            }, (err) => {
+                console.error("ID snapshot error:", err);
+            });
+        }
+
+        return () => {
+            if (unsubscribe) unsubscribe();
+        };
+    }, [user?.isVerified, user?.reservationId, user?.token, authInitialized]);
 
     const handleFlip = () => {
         if (!user?.isVerified) return;

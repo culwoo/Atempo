@@ -2,7 +2,7 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 import { generateNickname } from '../utils/nickname';
 import {
     auth, db,
-    onAuthStateChanged, signInWithEmailAndPassword, signOut as firebaseSignOut, createUserWithEmailAndPassword, updateProfile, sendPasswordResetEmail,
+    onAuthStateChanged, signInWithEmailAndPassword, signOut as firebaseSignOut, createUserWithEmailAndPassword, updateProfile, sendPasswordResetEmail, signInAnonymously,
     doc, setDoc, functions, httpsCallable
 } from '../api/firebase';
 import { isAdminEmail } from '../config/admins';
@@ -14,34 +14,65 @@ export const useAuth = () => useContext(AuthContext);
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null); // { name: string, role: 'performer'|'audience', uid?: string }
     const [loading, setLoading] = useState(true);
+    const [authInitialized, setAuthInitialized] = useState(false);
 
     // 1. Check for Firebase User (Performer)
+    // 1. Check for Firebase User (Performer or Anonymous)
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
             if (firebaseUser) {
-                setUser({
-                    uid: firebaseUser.uid,
-                    name: firebaseUser.displayName || '공연진',
-                    email: firebaseUser.email,
-                    role: 'performer',
-                    isAdmin: isAdminEmail(firebaseUser.email)
-                });
-                setLoading(false);
+                if (firebaseUser.isAnonymous) {
+                    // Anonymous User (Audience)
+                    // Still load the detailed audience info from LocalStorage
+                    const storedAudience = localStorage.getItem('melodic_audience_user');
+                    if (storedAudience) {
+                        const parsed = JSON.parse(storedAudience);
+                        // Ensure we use the same UID convention or keep the stored one?
+                        // For rules, the firebaseUser.uid matters.
+                        // For logic, verifyToken saves a UID.
+                        // Let's just set the user state to the stored audience data
+                        // The mere existence of firebaseUser (anon) in the background allows Firestore requests to pass.
+                        setUser(parsed);
+                    } else {
+                        // Anonymous but no ticket data yet (fresh visitor)
+                        setUser(null);
+                    }
+                    setLoading(false);
+                    setAuthInitialized(true);
+                } else {
+                    // Performer (Email/Password)
+                    setUser({
+                        uid: firebaseUser.uid,
+                        name: firebaseUser.displayName || '공연진',
+                        email: firebaseUser.email,
+                        role: 'performer',
+                        isAdmin: isAdminEmail(firebaseUser.email)
+                    });
+                    setLoading(false);
+                    setAuthInitialized(true);
+                }
             } else {
-                // If no performer logged in, checks for Audience session
+                // No user logged in at all.
+                // Sign in anonymously to allow reading Firestore (if rules require auth)
+                signInAnonymously(auth).then(() => {
+                    setAuthInitialized(true);
+                }).catch((err) => {
+                    console.error("Anon auth failed", err);
+                    setLoading(false);
+                    // Even if failed, we proceed so app doesn't hang.
+                    // If rules block reads, so be it, but UI shouldn't freeze.
+                    setAuthInitialized(true);
+                });
+
+                // While waiting for sign-in, we check local storage just in case
+                // but the final state set will come from the 'isAnonymous' block above.
                 const storedAudience = localStorage.getItem('melodic_audience_user');
                 if (storedAudience) {
-                    const parsed = JSON.parse(storedAudience);
-                    // Patch: If existing session lacks UID, add one
-                    if (!parsed.uid) {
-                        parsed.uid = 'audience_' + Date.now();
-                        localStorage.setItem('melodic_audience_user', JSON.stringify(parsed));
-                    }
-                    setUser(parsed);
+                    setUser(JSON.parse(storedAudience));
                 } else {
                     setUser(null);
                 }
-                setLoading(false);
+                // Don't set loading false yet, wait for anon sign-in callback
             }
         });
 
@@ -175,9 +206,9 @@ export const AuthProvider = ({ children }) => {
         audienceLogin,
         logout,
         updateNickname,
-        updateNickname,
         verifyToken,
-        resetPassword
+        resetPassword,
+        authInitialized
     };
 
     return (

@@ -4,6 +4,7 @@ import { useAuth } from '../contexts/AuthContext';
 import { Plus } from 'lucide-react';
 import StickyNote from '../components/StickyNote';
 import WriteModal from '../components/WriteModal';
+import PostModal from '../components/PostModal';
 import classes from './Board.module.css';
 
 const Board = () => {
@@ -11,6 +12,8 @@ const Board = () => {
     const [posts, setPosts] = useState([]);
     const [showModal, setShowModal] = useState(false);
     const [editingPost, setEditingPost] = useState(null);
+    const [viewingPost, setViewingPost] = useState(null);
+
 
     useEffect(() => {
         const q = query(collection(db, "posts"), orderBy("createdAt", "desc"));
@@ -20,6 +23,10 @@ const Board = () => {
         });
         return unsubscribe;
     }, []);
+
+    const handleViewPost = (post) => {
+        setViewingPost(post);
+    };
 
     const isAdmin = user?.isAdmin === true;
 
@@ -81,6 +88,7 @@ const Board = () => {
                         canDelete={isAdmin && post.isPublic}
                         onDelete={() => handleDelete(post.id)}
                         onEdit={() => handleEdit(post)}
+                        onClick={() => handleViewPost(post)}
                     />
                 ))}
                 {filteredPosts.length === 0 && (
@@ -98,6 +106,13 @@ const Board = () => {
                 <WriteModal
                     onClose={handleCloseModal}
                     postToEdit={editingPost}
+                />
+            )}
+
+            {viewingPost && (
+                <PostModal
+                    post={viewingPost}
+                    onClose={() => setViewingPost(null)}
                 />
             )}
         </div>

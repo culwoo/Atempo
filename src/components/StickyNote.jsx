@@ -4,7 +4,7 @@ import classes from './StickyNote.module.css';
 
 import { X, Pencil } from 'lucide-react';
 
-const StickyNote = ({ post, isMine, canDelete, onDelete, onEdit }) => {
+const StickyNote = ({ post, isMine, canDelete, onDelete, onEdit, onClick }) => {
     // post: { content, from, toName[], color, timestamp }
 
     // Random slight rotation for natural look (stable based on content length or id if real)
@@ -16,10 +16,12 @@ const StickyNote = ({ post, isMine, canDelete, onDelete, onEdit }) => {
             initial={{ scale: 0, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             whileHover={{ scale: 1.05, zIndex: 10, transition: { duration: 0.2 } }}
+            onClick={onClick}
             style={{
                 backgroundColor: post.color || '#FFF9B0',
                 rotate: rotation,
-                border: isMine ? '2px solid var(--primary-color)' : 'none'
+                border: isMine ? '2px solid var(--primary-color)' : 'none',
+                cursor: 'pointer'
             }}
         >
             {(isMine || canDelete) && (

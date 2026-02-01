@@ -10,7 +10,8 @@ import {
     signOut,
     createUserWithEmailAndPassword,
     updateProfile,
-    sendPasswordResetEmail
+    sendPasswordResetEmail,
+    signInAnonymously
 } from "firebase/auth";
 import {
     getFirestore,
@@ -25,7 +26,8 @@ import {
     query,
     where,
     orderBy,
-    onSnapshot
+    onSnapshot,
+    serverTimestamp
 } from "firebase/firestore";
 import {
     getFunctions,
@@ -65,7 +67,8 @@ export {
     signOut,
     createUserWithEmailAndPassword,
     updateProfile,
-    sendPasswordResetEmail
+    sendPasswordResetEmail,
+    signInAnonymously
 };
 
 // Re-export Firestore Functions
@@ -80,7 +83,8 @@ export {
     query,
     where,
     orderBy,
-    onSnapshot
+    onSnapshot,
+    serverTimestamp
 };
 
 export { httpsCallable };

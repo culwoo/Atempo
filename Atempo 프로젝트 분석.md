@@ -52,7 +52,12 @@
     - **삭제**: 작성자 본인이나 관리자만 삭제할 수 있습니다[github.com](https://github.com/culwoo/Atempo/blob/main/src/pages/Board.jsx#L47-L55). 관리자의 경우 전체 공개 글만 삭제할 수 있으며, 관리자여도 개별적으로 공개한 비공개 글은 접근 및 삭제할 수 없습니다.
         
     - **수정**: 기존 데이터를 모달에 채워 `updateDoc`으로 갱신합니다[github.com](https://github.com/culwoo/Atempo/blob/main/src/components/WriteModal.jsx#L90-L101).
+
+    - **댓글**: 게시글 상세 보기(모달)에서 댓글을 작성하고 조회할 수 있습니다[github.com](https://github.com/culwoo/Atempo/blob/main/src/components/PostModal.jsx#L121-L180).
         
+        - **작성**: 로그인한 사용자 누구나 댓글을 남길 수 있으며, Firestore `comments` 컬렉션에 저장됩니다[github.com](https://github.com/culwoo/Atempo/blob/main/src/components/PostModal.jsx#L42-L62).
+        
+        - **삭제**: 댓글 작성자 본인과 관리자(Admin)만 삭제할 수 있습니다[github.com](https://github.com/culwoo/Atempo/blob/main/src/components/PostModal.jsx#L64-L72).
 
 ### 2.4. 예약 페이지(`/reserve`)
 
@@ -82,6 +87,8 @@
 - **예약 관리**:
     
     - `reservations` 컬렉션을 실시간 구독하여 목록을 보여주며, 상태(`pending`/`paid`)와 생성 시간 등을 표시합니다[github.com](https://github.com/culwoo/Atempo/blob/main/src/pages/Admin.jsx#L65-L89).
+
+    - **예약 마감/오픈**: 관리자는 예약을 수동으로 마감하거나 다시 오픈할 수 있으며, 이는 `settings/global` 문서의 status를 변경하여 즉시 반영됩니다[github.com](https://github.com/culwoo/Atempo/blob/main/src/pages/Admin.jsx#L37-L53).
         
     - **수동 승인**: 관리자는 예약 상태를 `paid`로 변경하고 랜덤 토큰을 생성해 업데이트할 수 있습니다[github.com](https://github.com/culwoo/Atempo/blob/main/src/pages/Admin.jsx#L65-L89).
         

@@ -11,7 +11,8 @@ import {
     getDocs,
     where,
     functions,
-    httpsCallable
+    httpsCallable,
+    setDoc
 } from '../api/firebase';
 import { useAuth } from '../contexts/AuthContext';
 import classes from './Admin.module.css';
@@ -22,6 +23,34 @@ const Admin = () => {
     const [performers, setPerformers] = useState([]);
     const [performersLoading, setPerformersLoading] = useState(true);
     const [performersError, setPerformersError] = useState('');
+    const [isReservationClosed, setIsReservationClosed] = useState(false);
+
+    useEffect(() => {
+        const unsubscribe = onSnapshot(doc(db, "settings", "global"), (docSnap) => {
+            if (docSnap.exists()) {
+                setIsReservationClosed(docSnap.data().isReservationClosed);
+            }
+        });
+        return unsubscribe;
+    }, []);
+
+    const handleToggleReservation = async () => {
+        const newValue = !isReservationClosed;
+        const message = newValue
+            ? "예약을 마감하시겠습니까? 사용자들은 더 이상 예약할 수 없습니다."
+            : "예약을 다시 여시겠습니까? 사용자들이 예약할 수 있게 됩니다.";
+
+        if (!window.confirm(message)) return;
+
+        try {
+            await setDoc(doc(db, "settings", "global"), {
+                isReservationClosed: newValue
+            }, { merge: true });
+        } catch (err) {
+            console.error("Failed to update reservation status:", err);
+            alert("상태 변경에 실패했습니다.");
+        }
+    };
 
     const [error, setError] = useState(null);
 
@@ -142,25 +171,7 @@ const Admin = () => {
         }
     };
 
-    const handleResetPerformerPassword = async (performer) => {
-        if (!user?.isAdmin) return;
 
-        const newPassword = prompt(`"${performer.name || performer.email}" 계정의 새로운 비밀번호를 입력하세요. (6자 이상)`);
-        if (newPassword === null) return; // Cancelled
-        if (newPassword.trim().length < 6) {
-            alert("비밀번호는 6자 이상이어야 합니다.");
-            return;
-        }
-
-        try {
-            const callAdminResetPassword = httpsCallable(functions, "adminResetPassword");
-            await callAdminResetPassword({ uid: performer.uid, newPassword: newPassword.trim() });
-            alert("비밀번호가 변경되었습니다.");
-        } catch (err) {
-            console.error("Failed to reset password:", err);
-            alert("비밀번호 변경 실패: " + err.message);
-        }
-    };
 
     const handleUpdateVisitedFor = async (id, value) => {
         await updateDoc(doc(db, "reservations", id), {
@@ -224,7 +235,29 @@ const Admin = () => {
 
             <div className={classes.grid}>
                 <div className={classes.card}>
-                    <h3>예약 현황</h3>
+                    <h3>
+                        예약 현황
+                        <span className={classes.stats}>
+                            (미선택: {reservations.filter(r => !r.visitedFor).length}명
+                            / Wave: {reservations.filter(r => r.visitedFor === 'Wave').length}명
+                            / Atempo: {reservations.filter(r => r.visitedFor === 'Atempo').length}명)
+                        </span>
+                        <button
+                            onClick={handleToggleReservation}
+                            style={{
+                                marginLeft: '1rem',
+                                padding: '0.3rem 0.8rem',
+                                fontSize: '0.9rem',
+                                cursor: 'pointer',
+                                backgroundColor: isReservationClosed ? '#4caf50' : '#f44336',
+                                color: 'white',
+                                border: 'none',
+                                borderRadius: '4px'
+                            }}
+                        >
+                            {isReservationClosed ? "예약 다시 열기 (현재 마감됨)" : "예약 마감하기 (현재 오픈됨)"}
+                        </button>
+                    </h3>
                     <div className={classes.listActions}>
                         <button className={classes.deleteAllBtn} onClick={handleDeleteAllReservations}>
                             전체 삭제
@@ -278,7 +311,7 @@ const Admin = () => {
                                         </td>
                                         <td>
                                             <select
-                                                className={classes.visitSelect}
+                                                className={`${classes.visitSelect} ${!res.visitedFor ? classes.visitSelectUnselected : ''}`}
                                                 value={res.visitedFor || ''}
                                                 onChange={(e) => handleUpdateVisitedFor(res.id, e.target.value)}
                                             >
@@ -305,8 +338,8 @@ const Admin = () => {
                                             {res.status === 'onsite_pending' && (
                                                 <button onClick={() => handleOnsiteApprove(res.id)}>현장확인</button>
                                             )}
-                                            {res.status === 'pending' && (
-                                                <button onClick={() => handleManualApprove(res.id)}>승인</button>
+                                            {(res.status === 'pending' || res.status === 'ambiguous') && (
+                                                <button className={classes.approveBtn} onClick={() => handleManualApprove(res.id)}>승인</button>
                                             )}
                                             <button
                                                 className={classes.deleteBtn}
@@ -390,13 +423,7 @@ const Admin = () => {
                                                     <td>{performer.email || '-'}</td>
                                                     <td>{formatTimestamp(performer.createdAt)}</td>
                                                     <td>
-                                                        <button
-                                                            className={classes.linkBtn}
-                                                            onClick={() => handleResetPerformerPassword(performer)}
-                                                            style={{ marginRight: '0.5rem' }}
-                                                        >
-                                                            비밀번호 변경
-                                                        </button>
+
                                                         <button
                                                             className={classes.deleteBtn}
                                                             onClick={() => handleDeletePerformer(performer)}
@@ -414,7 +441,7 @@ const Admin = () => {
                     )}
                 </div>
             </div>
-        </div>
+        </div >
     );
 };
 

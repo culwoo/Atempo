@@ -16,6 +16,13 @@
     font-weight: normal;
 }
 
+.stats {
+    font-size: 1rem;
+    margin-left: 1rem;
+    color: var(--text-secondary);
+    font-weight: normal;
+}
+
 .grid {
     display: grid;
     grid-template-columns: 1fr;
@@ -109,6 +116,16 @@
 
 .tr.ambiguous {
     background-color: var(--bg-secondary);
+}
+
+.approveBtn {
+    background-color: #00b894;
+    color: white;
+    border: none;
+    padding: 4px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.8rem;
 }
 
 .linkBtn {
@@ -285,4 +302,31 @@
     color: var(--text-primary);
     font-size: 0.9rem;
     cursor: pointer;
+}
+
+
+.visitSelect option {
+    background-color: #1a1a1a;
+    color: #efefef;
+}
+
+.visitSelectUnselected {
+    border: 1px solid #e17055;
+    color: #ffeaa7;
+    background-color: #e17055;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(225, 112, 85, 0.4);
+    }
+
+    70% {
+        box-shadow: 0 0 0 6px rgba(225, 112, 85, 0);
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 rgba(225, 112, 85, 0);
+    }
 }
